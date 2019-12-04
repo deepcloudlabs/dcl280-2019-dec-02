@@ -1,1 +1,7 @@
 /.metadata/
+*.class
+*.csv
+/target/
+/bin/
+*.jar
+/.mvn/
