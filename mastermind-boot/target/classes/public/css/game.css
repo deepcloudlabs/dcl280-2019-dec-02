@@ -1,0 +1,40 @@
+table.zebra tbody tr:nth-child(odd) {
+	background-color: #c0c0c0;
+}
+
+table.zebra tbody tr:nth-child(even) {
+	background-color: #e0e0e0;
+}
+
+table.hover tbody tr:hover {
+	background-color: #FFFACD;
+}
+
+table.header thead tr th {
+	background: url(bg.jpg);
+	text-align: center;
+}
+
+.div-center {
+	position: absolute;
+	height: 200px;
+	width: 400px;
+	margin: -100px 0 0 -200px;
+	top: 50%;
+	left: 50%;
+}
+
+.error {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #ff0000;
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
