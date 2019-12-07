@@ -3,6 +3,7 @@ package com.example.hr.controller;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -89,6 +90,16 @@ public class EmployeeRestControllerTest {
 				.andExpect(status().isOk()).andExpect(jsonPath("identity", is(jack.getIdentity())))
 				.andExpect(jsonPath("fullname", is(jack.getFullname())))
 				.andExpect(jsonPath("salary", is(jack.getSalary())));
-		;
+	}
+
+	@Test
+	public void removeEmployeeByIdentity_thenSendsOk() throws Exception {
+		Employee jack = new Employee("10987654321", "Jack Bauer", 100_000);
+		Mockito.when(employeeService.deleteByIdentity("12345678910")).thenReturn(jack);
+		mockMvc.perform(delete("/employees/12345678910")).andExpect(status().isOk())
+				.andExpect(jsonPath("identity", is(jack.getIdentity())))
+				.andExpect(jsonPath("fullname", is(jack.getFullname())))
+				.andExpect(jsonPath("salary", is(jack.getSalary())));
+
 	}
 }
