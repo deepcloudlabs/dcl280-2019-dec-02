@@ -8,8 +8,8 @@ import com.example.banking.domain.InsufficientBalanceEception;
 /**
  * @author Binnur Kurt <binnur.kurt@gmail.com>
  */
-@SuppressWarnings("static-access")
 public class AccountApp {
+	@SuppressWarnings("unused")
 	public static void main(String[] args) throws InsufficientBalanceEception {
 		Account myAcc = null;
 		// myAcc.withdraw(1_000_000); // NPE
