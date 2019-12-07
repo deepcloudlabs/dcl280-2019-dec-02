@@ -1,5 +1,6 @@
 package com.example.hr.exception;
 
+@SuppressWarnings("serial")
 public class BaseException extends RuntimeException {
     private final String debugId;
     private final String i18nId;
