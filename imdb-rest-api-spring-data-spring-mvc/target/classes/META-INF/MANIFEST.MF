@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: imdb-spring-data
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Binnur
+Implementation-Vendor-Id: com.example
+Build-Jdk: 1.8.0_211
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/imdb-spring-data
+Created-By: Maven Integration for Eclipse
+
