@@ -3,6 +3,7 @@ package com.example.hr.controller;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -101,5 +102,40 @@ public class EmployeeRestControllerTest {
 				.andExpect(jsonPath("fullname", is(jack.getFullname())))
 				.andExpect(jsonPath("salary", is(jack.getSalary())));
 
+	}
+
+	@Test
+	public void removeEmployeeByIdentity_thenSendsBadRequest() throws Exception {
+		EmployeeNotFound employeeNotFound = new EmployeeNotFound("Employee is not found", "employeeNotFound",
+				"82c8eb91-8abc-4bb3-96d8-48828babb7ce");
+		Mockito.when(employeeService.deleteByIdentity("12345678910")).thenThrow(employeeNotFound);
+		mockMvc.perform(delete("/employees/12345678910")).andExpect(status().isBadRequest())
+				.andExpect(jsonPath("msg", is(employeeNotFound.getMessage())))
+				.andExpect(jsonPath("debug", is(employeeNotFound.getDebugId())))
+				.andExpect(jsonPath("msgid", is(employeeNotFound.getI18nId())));
+	}
+
+	@Test
+	public void updateEmployee_thenSendsBadRequest() throws Exception {
+		EmployeeNotFound employeeNotFound = new EmployeeNotFound("Employee is not found", "employeeNotFound",
+				"82c8eb91-8abc-4bb3-96d8-48828babb7ce");
+		Employee jack = new Employee("10987654321", "Jack Bauer", 100_000);
+		String json = objectMapper.writeValueAsString(jack);
+		Mockito.when(employeeService.updateEmployee(jack)).thenThrow(employeeNotFound);
+		mockMvc.perform(put("/employees").content(json).contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(status().isBadRequest()).andExpect(jsonPath("msg", is(employeeNotFound.getMessage())))
+				.andExpect(jsonPath("debug", is(employeeNotFound.getDebugId())))
+				.andExpect(jsonPath("msgid", is(employeeNotFound.getI18nId())));
+	}
+
+	@Test
+	public void updateEmployee_thenSendsOk() throws Exception {
+		Employee jack = new Employee("10987654321", "Jack Bauer", 100_000);
+		String json = objectMapper.writeValueAsString(jack);
+		Mockito.when(employeeService.updateEmployee(jack)).thenReturn(jack);
+		mockMvc.perform(put("/employees").content(json).contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(status().isOk()).andExpect(jsonPath("identity", is(jack.getIdentity())))
+				.andExpect(jsonPath("fullname", is(jack.getFullname())))
+				.andExpect(jsonPath("salary", is(jack.getSalary())));
 	}
 }
